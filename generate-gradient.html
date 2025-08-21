@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Gradient PNG</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        #canvas {
+            border: 2px solid #333;
+            margin: 20px 0;
+        }
+        button {
+            background: linear-gradient(45deg, #5170ff, #0cc0df, #00fefe);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .instructions {
+            background: rgba(81, 112, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Generador de Gradiente para Chrome Theme</h1>
+    
+    <div class="instructions">
+        <h3>Instrucciones:</h3>
+        <ol>
+            <li>Haz clic en "Generar Gradiente"</li>
+            <li>Haz clic derecho en la imagen generada</li>
+            <li>Selecciona "Guardar imagen como..."</li>
+            <li>Guárdala como "gradient-background.png" en la carpeta "images"</li>
+        </ol>
+    </div>
+
+    <button onclick="generateGradient()">Generar Gradiente</button>
+    <button onclick="downloadGradient()">Descargar PNG</button>
+    
+    <canvas id="canvas" width="200" height="200"></canvas>
+
+    <script>
+        function generateGradient() {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Crear gradiente diagonal
+            const gradient = ctx.createLinearGradient(0, 0, 200, 200);
+            gradient.addColorStop(0, '#5170ff');
+            gradient.addColorStop(0.5, '#0cc0df');
+            gradient.addColorStop(1, '#00fefe');
+            
+            // Aplicar gradiente
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 200, 200);
+            
+            // Añadir efecto glass con transparencia
+            ctx.globalAlpha = 0.8;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.fillRect(0, 0, 200, 200);
+        }
+        
+        function downloadGradient() {
+            const canvas = document.getElementById('canvas');
+            const link = document.createElement('a');
+            link.download = 'gradient-background.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        // Generar automáticamente al cargar
+        window.onload = generateGradient;
+    </script>
+</body>
+</html>
